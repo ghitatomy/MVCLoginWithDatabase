@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.designpatterns.app.model.MySQLDAOFactory;
 import com.designpatterns.app.model.DAOFactory;
 import com.designpatterns.app.model.Database;
 import com.designpatterns.app.model.Person;
@@ -35,7 +36,8 @@ public class PersonDAOTests {
 	public void setUp() throws Exception{
 		System.out.println("set Up");
 		
-		PersonDAO personDAO = DAOFactory.getPersonDAO();
+		MySQLDAOFactory factory = new MySQLDAOFactory();
+		PersonDAO personDAO = factory.getPersonDAO();
 		personDAO.deleteAll();
 	}
 	
@@ -56,7 +58,8 @@ public class PersonDAOTests {
 	
 	@Test
 	public void testCreate() throws SQLException{
-		PersonDAO personDAO = DAOFactory.getPersonDAO();
+		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
+		PersonDAO personDAO = factory.getPersonDAO();
 		
 		Person person1 = new Person("Bob", "letmein");
 		Person person2 = new Person("Sue", "hello");

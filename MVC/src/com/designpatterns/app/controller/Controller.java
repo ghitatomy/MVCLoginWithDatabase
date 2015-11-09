@@ -1,7 +1,6 @@
 package com.designpatterns.app.controller;
 
 import java.sql.SQLException;
-import java.util.logging.LoggingPermission;
 
 import com.designpatterns.app.model.DAOFactory;
 import com.designpatterns.app.model.Model;
@@ -14,9 +13,7 @@ import com.designpatterns.app.view.View;
 public class Controller implements LoginListener{
 	private View view; 
 	private Model model;
-	
-	private PersonDAO personDAO= DAOFactory.getPersonDAO();
-	
+		
 	public Controller(View view, Model model) {
 		this.view = view;
 		this.model = model;
@@ -24,6 +21,10 @@ public class Controller implements LoginListener{
 
 	@Override
 	public void loginPerformed(LoginFormEvent event) {
+
+		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
+		PersonDAO personDAO = factory.getPersonDAO();
+
 		System.out.println("Login event received:" + event.getName() +":" + event.getPassword());
 		
 		String name = event.getName();

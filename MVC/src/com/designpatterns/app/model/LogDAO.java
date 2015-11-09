@@ -2,13 +2,10 @@ package com.designpatterns.app.model;
 
 import java.util.List;
 
-public class LogDAO {
+public interface LogDAO {
 
-	public void addEntry(String message){
-		
-	}
-	
-	public List<Log> getEntries(int number){
-		return null;
-	}
+	void addEntry(String message);
+
+	List<Log> getEntries(int number);
+
 }
