@@ -100,4 +100,16 @@ public class PersonDAO {
 		
 		return deleted;
 	}
+	
+	public int deleteAll() throws SQLException{
+		Connection conn = Database.getInstance().getConnection();
+
+		PreparedStatement p = conn.prepareStatement("delete from people");
+
+		int delete  = p.executeUpdate();
+		
+		p.close();
+		
+		return delete;
+	}
 }
