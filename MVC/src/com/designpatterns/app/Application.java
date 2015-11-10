@@ -21,8 +21,13 @@ public class Application {
 		Model model = new Model();
 		View view = new View(model);
 		
-		Controller controller = new Controller(view,model); 
+		Controller controller = new Controller(view,model);
 		
-		view.setLoginLister(controller);
+		view.setCreateUserListener(controller);
+		view.setSaveListener(controller);
+		view.setAppListener(controller);
+		
+		model.setPeopleChangedListener(view);
+		
 	}
 }
