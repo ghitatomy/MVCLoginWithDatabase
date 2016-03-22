@@ -4,7 +4,7 @@ import java.util.List;
 
 public class MySQLLogDAO implements LogDAO {
 
-	/* (non-Javadoc)
+	/* (non-Javadoc)/
 	 * @see com.designpatterns.app.model.LogDAO#addEntry(java.lang.String)
 	 */
 	@Override
