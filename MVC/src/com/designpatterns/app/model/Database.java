@@ -6,12 +6,9 @@ import java.sql.SQLException;
 
 public class Database {
 	private static Database instance = new Database();
-	
 	private Connection conn;
 	
-	public Database(){
-		
-	}
+	public Database(){ }
 
 	public static Database getInstance(){
 		return instance;
@@ -20,6 +17,7 @@ public class Database {
 	public Connection getConnection(){
 		return conn;
 	}
+	
 	public void connect() throws Exception{
 		if(conn != null)
 			return;
@@ -29,9 +27,7 @@ public class Database {
 		catch(ClassNotFoundException e){
 			throw new Exception("Driver not found");
 		}
-		
 		String url = String.format("jdbc:mysql://localhost:%d/test", 3306);
-		
 		conn = DriverManager.getConnection(url, "root", "");
 	}
 	

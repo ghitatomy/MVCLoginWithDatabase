@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -25,12 +24,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
-
 import com.designpatterns.app.model.Model;
 import com.designpatterns.app.model.Person;
 
 public class View extends JFrame implements ActionListener, PeopleChangedListener {
-
 	private static final long serialVersionUID = 1L;
 	private Model model;
 	private JButton okButton;
@@ -39,16 +36,13 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 	private JPasswordField repeatPassField;
 	private JList<Person> userList;
 	private DefaultListModel<Person> listModel;
-
 	private CreateUserListener createUserListener;
 	private SaveListener saveListener;
 	private AppListener appListener;
 
 	public View(Model model) {
 		super("MVC Demo");
-
 		this.model = model;
-
 		nameField = new JTextField(10);
 		passField = new JPasswordField(10);
 		repeatPassField = new JPasswordField(10);
@@ -62,7 +56,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		Border innerBorder = BorderFactory.createEtchedBorder();
 		userList.setBorder(BorderFactory.createCompoundBorder(outerBorder,
 				innerBorder));
-
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
@@ -73,7 +66,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 1;
 		gc.insets = new Insets(100, 0, 0, 10);
 		gc.fill = GridBagConstraints.NONE;
-
 		add(new JLabel("Name: "), gc);
 
 		gc.anchor = GridBagConstraints.LAST_LINE_START;
@@ -83,7 +75,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 1;
 		gc.insets = new Insets(100, 0, 0, 0);
 		gc.fill = GridBagConstraints.NONE;
-
 		add(nameField, gc);
 
 		gc.anchor = GridBagConstraints.LINE_END;
@@ -93,7 +84,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 0, 0, 10);
 		gc.fill = GridBagConstraints.NONE;
-
 		add(new JLabel("Password: "), gc);
 
 		gc.anchor = GridBagConstraints.LINE_START;
@@ -103,7 +93,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.fill = GridBagConstraints.NONE;
-
 		add(passField, gc);
 
 		gc.anchor = GridBagConstraints.LINE_END;
@@ -113,7 +102,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 0, 0, 10);
 		gc.fill = GridBagConstraints.NONE;
-
 		add(new JLabel("Repeat password: "), gc);
 
 		gc.anchor = GridBagConstraints.LINE_START;
@@ -123,7 +111,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 1;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.fill = GridBagConstraints.NONE;
-
 		add(repeatPassField, gc);
 
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -132,7 +119,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weightx = 1;
 		gc.weighty = 100;
 		gc.fill = GridBagConstraints.NONE;
-
 		add(okButton, gc);
 
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -142,7 +128,6 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		gc.weighty = 100;
 		gc.gridwidth = 2;
 		gc.fill = GridBagConstraints.HORIZONTAL;
-
 		add(new JScrollPane(userList), gc);
 
 		okButton.addActionListener(this);
@@ -151,38 +136,28 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 		// Database db = Database.getInstance();
 
 		addWindowListener(new WindowAdapter() {
-
 			@Override
 			public void windowOpened(WindowEvent e) {
 				fireOpenEvent();
 			}
-
 			@Override
 			public void windowClosing(WindowEvent e) {
 				fireCloseEvent();
 			}
-
 		});
-
 		JMenuBar menu = createMenu();
 		setJMenuBar(menu);
-
 		setSize(600, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		String password = new String(passField.getPassword());
 		String repeat = new String(repeatPassField.getPassword());
-
 		if (password.equals(repeat)) {
 			String name = nameField.getText();
-
 			fireCreateUserEvent(new CreateUserEvent(name, password));
-			
 			nameField.setText("");
 			passField.setText("");
 			repeatPassField.setText("");
@@ -191,83 +166,54 @@ public class View extends JFrame implements ActionListener, PeopleChangedListene
 					"Error", JOptionPane.WARNING_MESSAGE);
 		}
 	}
-
 	public void showError(String error) {
-		JOptionPane.showMessageDialog(this, error, "Error",
-				JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.WARNING_MESSAGE);
 	}
-
 	private JMenuBar createMenu() {
-
 		JMenuBar menuBar = new JMenuBar();
-
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem saveItem = new JMenuItem("Save");
-		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				KeyEvent.CTRL_MASK));
-
+		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
 		fileMenu.add(saveItem);
-
 		menuBar.add(fileMenu);
-
 		saveItem.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fireSaveEvent();
 			}
 		});
-
 		return menuBar;
 	}
-
 	public void setCreateUserListener(CreateUserListener loginListener) {
 		this.createUserListener = loginListener;
 	}
-
 	public void setSaveListener(SaveListener saveListener) {
 		this.saveListener = saveListener;
 	}
-
 	public void setAppListener(AppListener appListener) {
 		this.appListener = appListener;
 	}
-
 	private void fireCreateUserEvent(CreateUserEvent event) {
-		if (createUserListener != null) {
+		if (createUserListener != null) 
 			createUserListener.onUserCreated(event);
-		}
 	}
-
 	private void fireOpenEvent() {
-		if (appListener != null) {
+		if (appListener != null) 
 			appListener.onOpen();
-		}
 	}
-
 	private void fireCloseEvent() {
-		if (appListener != null) {
+		if (appListener != null) 
 			appListener.onClose();
-		}
 	}
-
 	private void fireSaveEvent() {
-		if (saveListener != null) {
+		if (saveListener != null) 
 			saveListener.onSave();
-		}
 	}
-
 	@Override
 	public void onPeopleChanged() {
-
 		listModel.clear();
-
 		List<Person> people = model.getPeople();
-		
-		for (Person person : people) {
+		for (Person person : people) 
 			listModel.addElement(person);
-		}
-		
 	}
-
 }
